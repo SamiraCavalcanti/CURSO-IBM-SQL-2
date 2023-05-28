@@ -56,11 +56,13 @@ WHERE ADDRESS like '%IL';
 ------------------------------------------
 --Query 2:Recupere todos os funcionários que nasceram durante a década de 1970.--
 --------------------------------------------
+
 SELECT 
 * FROM employees
 WHERE 
 B_DATE 
 LIKE '197%';
+
 -----------------------------------------
 --Query 3:Recupere todos os funcionários do departamento 5 cujo salário está entre 60000 e 70000...--
 --------------------------------------------
@@ -76,6 +78,7 @@ AND 70000;
 ------------------------------------------
 --Query 4A:Recupere uma lista de funcionários ordenados por ID de departamento..--
 --------------------------------------------
+
 SELECT F_NAME,L_NAME,DEP_ID
 FROM EMPLOYEES
 ORDER BY DEP_ID;
@@ -85,15 +88,17 @@ ORDER BY DEP_ID;
 ID do departamento e dentro de cada departamento ordenado alfabeticamente em
 ordem decrescente por sobrenome...*/
 -------------------------------------------
+
 SELECT DEP_ID,F_NAME,L_NAME
 FROM EMPLOYEES
 ORDER BY 1 DESC, 3 DESC;
------------------------------------------
---OR...--
---------------------------------------------
+
+--OR
+
 SELECT DEP_ID,L_NAME,F_NAME
 FROM EMPLOYEES
 ORDER BY DEP_ID DESC, L_NAME DESC;
+
 -----------------------------------------
 --QUERY 5A-Para cada ID de departamento, recupere o número de funcionários no departamento.--
 --------------------------------------------
@@ -102,36 +107,46 @@ SELECT DEP_ID, COUNT(*) AS "NÚMERO DE FUNCIONÁRIOS"
 FROM EMPLOYEES
 GROUP BY DEP_ID;
 -----------------------------------------
+
 --QUERY 5B-Para cada departamento, recupere o número de funcionários no
 --departamento e o salário médio dos funcionários do departamento..--
 --------------------------------------------
+
 SELECT DEP_ID,COUNT(*),
 AVG(SALARY)
 FROM EMPLOYEES
 GROUP BY DEP_ID;
+
 --QUERY 5C-rotule as colunas computadas no conjunto de resultados da Consulta 5B como
 --“NUM_EMPLOYEES” e “AVG_SALARY”..--
 --------------------------------------------
+
 --Na Consulta 5D limitar o resultado a departamentos com menos de 4 funcionários.
 SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES",AVG(SALARY) AS AVG_SALARY
 FROM EMPLOYEES
 GROUP BY DEP_ID;
 
 --QUERY  5C-Na Consulta 5C ordene o resultado definido pelo Salário Médio.
+
 SELECT DEP_ID,COUNT(*) AS NUM_EMPLOYEES, AVG(SALARY)AS AVG_SALARY 
 FROM EMPLOYEES
 GROUP BY DEP_ID
 ORDER BY AVG_SALARY;
---QUERY 6-Semelhante ao 4B, mas em vez do ID do departamento, use o departamento
---nome. Recupere uma lista de funcionários ordenados por nome de departamento e dentro
---cada departamento ordenado alfabeticamente em ordem decrescente pelo sobrenome
+
+--QUERY 5E-Na Consulta 5D limitar o resultado a departamentos com menos de 4
+--funcionários.-----------------
+
 SELECT DEP_ID,COUNT(*) AS NUM_EMPLOYEES, AVG(SALARY) AS AVG_SALARY
 FROM EMPLOYEES
 GROUP BY DEP_ID
 HAVING  COUNT(*) < 4
 ORDER BY AVG_SALARY;
+--------------------------
 
----
+--QUERY 6-Semelhante ao 4B, mas em vez do ID do departamento, use o departamento
+--nome. Recupere uma lista de funcionários ordenados por nome de departamento e dentro
+--cada departamento ordenado alfabeticamente em ordem decrescente pelo sobrenome
+
 SELECT EMPLOYEES.F_NAME,EMPLOYEES.L_NAME,DEPARTMENTS.DEP_NAME
 FROM EMPLOYEES
 INNER JOIN DEPARTMENTS ON EMPLOYEES.DEP_ID = DEPARTMENTS.DEPT_ID_DEP
@@ -142,4 +157,3 @@ SELECT D.DEP_NAME, E.F_NAME,E.L_NAME
 FROM EMPLOYEES AS E, DEPARTMENTS AS D
 WHERE D.DEPT_ID_DEP = E.DEP_ID
 ORDER BY D.DEP_NAME,E.L_NAME DESC
-
